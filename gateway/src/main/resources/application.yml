@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:  # 目的：将业务端口地址（9001）对外隐藏，暴露路由地址（9000）,访问的是：localhost:9000/system/**,实际处理的是localhost:9001/system/**
+      routes: # 路由转发配置
+        - id: system # 转发到哪一个业务模块里
+          uri: http://127.0.0.1:9001 # 业务模块的地址
+          predicates:
+            - name: Path #路径配置
+              args:
+                - /system/**
+server:
+  port: 9000
+
